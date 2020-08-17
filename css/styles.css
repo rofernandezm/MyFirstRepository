@@ -139,3 +139,73 @@ a.custom-card:hover {
 .checked {
   color: orange;
 }
+
+.cont {
+    display: flex;
+    margin: auto auto 20px;
+    padding: 22px;
+    width: 300px;
+    font-family: Verdana;
+    color: rgb(95, 95, 95);
+}
+
+#BLogin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#imlog {
+  text-align: center;
+}
+#username, #password {
+  width: 100%;
+  padding: 8px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+#btnlog {
+    width: 300px;
+    background-color: rgb(214, 28, 108);
+    border: none ;
+    margin-top: 10px;
+    padding: 8px;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+}
+
+#btnlog:hover{
+  background-color:rgb(116, 4, 13);
+}
+
+
+
+
+/*
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-align: center;
+      align-items: center;
+      padding-top: 40px;
+      padding-bottom: 40px;
+      background-color: white;
+    }
+
+    .signin {
+      width: 100%;
+      max-width: 330px;
+      padding: 15px;
+      margin: auto;
+    }
+  </style>*/

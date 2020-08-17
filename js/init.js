@@ -1,7 +1,7 @@
 const CATEGORIES_URL = "https://japdevdep.github.io/ecommerce-api/category/all.json";
 const PUBLISH_PRODUCT_URL = "https://japdevdep.github.io/ecommerce-api/product/publish.json";
 const CATEGORY_INFO_URL = "https://japdevdep.github.io/ecommerce-api/category/1234.json";
-const PRODUCTS_URL = "https://japdevdep.github.io/ecommerce-api/product/all.json";
+const PRODUCTS_URL = "https://japdevdep.github.io/ecommerce-api/product/all.json"
 const PRODUCT_INFO_URL = "https://japdevdep.github.io/ecommerce-api/product/5678.json";
 const PRODUCT_INFO_COMMENTS_URL = "https://japdevdep.github.io/ecommerce-api/product/5678-comments.json";
 const CART_INFO_URL = "https://japdevdep.github.io/ecommerce-api/cart/987.json";
@@ -39,6 +39,18 @@ var getJSONData = function(url){
         return result;
     });
 }
+
+let firebaseConfig = {
+  apiKey: "AIzaSyArW3c6-Z42RalkYAXJBwyRjRJICJa0vqE",
+  authDomain: "ecommercejap-e0980.firebaseapp.com",
+  databaseURL: "https://ecommercejap-e0980.firebaseio.com",
+  projectId: "ecommercejap-e0980",
+  storageBucket: "ecommercejap-e0980.appspot.com",
+  messagingSenderId: "117109848210",
+  appId: "1:117109848210:web:2fd4c6c82c9ea0f49d4e4b"
+};
+
+firebase.initializeApp(firebaseConfig);
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
