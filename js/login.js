@@ -17,7 +17,7 @@ function validation() {
 
   } else if (pass.length < 8) {
 
-    document.getElementById("msj").innerHTML = "La contraseña debe tener al menos de 8 carácteres.";
+    document.getElementById("msj").innerHTML = "La contraseña debe tener un mínimo 8 carácteres.";
     document.getElementById("password").focus();
     return false;
   }
