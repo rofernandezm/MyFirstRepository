@@ -40,17 +40,15 @@ var getJSONData = function(url){
     });
 }
 
-let firebaseConfig = {
-  apiKey: "AIzaSyArW3c6-Z42RalkYAXJBwyRjRJICJa0vqE",
-  authDomain: "ecommercejap-e0980.firebaseapp.com",
-  databaseURL: "https://ecommercejap-e0980.firebaseio.com",
-  projectId: "ecommercejap-e0980",
-  storageBucket: "ecommercejap-e0980.appspot.com",
-  messagingSenderId: "117109848210",
-  appId: "1:117109848210:web:2fd4c6c82c9ea0f49d4e4b"
-};
+function sessionOut(){
+  localStorage.clear();
+}
 
-firebase.initializeApp(firebaseConfig);
+// Envia nombre de usuario al campo asignado en NavBar
+
+let usuario = localStorage.getItem("Usuario");
+document.getElementById("USER").innerHTML = usuario;
+
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los

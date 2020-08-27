@@ -14,29 +14,40 @@
 
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
-  <!-- The core Firebase JS SDK is always required and must be listed first -->
   
-  <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
-
-  <!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
 </head>
 
 <body>
+  <!-- Barra de navegacion -->
   <nav class="site-header sticky-top py-1 bg-dark">
     <div class="container d-flex flex-column flex-md-row justify-content-between">
       <a class="py-2 d-none d-md-inline-block" href="home.html">Inicio</a>
       <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
       <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
       <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
-      <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
+      <!-- Menu usuario -->
+      <div class="dropdown">
+        <button id="USER" class="dropbtn py-2 d-none d-md-inline-block"></button>
+        <div class="dropdown-content">
+          <a href="my-profile.html">Perfil</a>
+          <a href="cart.html">Mi Carrito</a>
+          <a onclick="sessionOut()" href="index.html">Cerrar Sesión</a>
+        </div>
+      </div>
     </div>
   </nav>
   <main role="main" class="pb-5">
+
+    <!-- Encabezado -->
+    
     <div class="text-center p-4">
       <h2>Categorías</h2>
       <p class="lead">Verás aquí todas las categorías del sitio.</p>
     </div>
     <div class="container">
+
+      <!-- Botonera ordenamiento -->
+
       <div class="row">
         <div class="col text-right">
           <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
@@ -52,6 +63,9 @@
           </div>
         </div>
       </div>
+
+      <!-- Filtro min/max -->
+
       <div class="row justify-content-end">
         <div class="col-md-6"></div>
         <div class="col-md-6 col-sm-12 mb-1 container">
@@ -74,6 +88,9 @@
           </div>
         </div>
       </div>
+
+      <!-- Listado de categorias -->
+
       <div class="row">
         <div class="list-group" id="cat-list-container">
         </div>
