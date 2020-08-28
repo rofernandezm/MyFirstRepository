@@ -11,13 +11,13 @@ function validation() {
 
   } else if (!expresion.test(user)) {
 
-    document.getElementById("msj").innerHTML = "Debe ingresar una Email válido.";
+    document.getElementById("msj").innerHTML = "Debe ingresar una email válido.";
     document.getElementById("username").focus();
     return false;
 
   } else if (pass.length < 8) {
 
-    document.getElementById("msj").innerHTML = "La contraseña debe tener un mínimo 8 carácteres.";
+    document.getElementById("msj").innerHTML = "La contraseña debe tener un mínimo de 8 carácteres.";
     document.getElementById("password").focus();
     return false;
   }
@@ -25,7 +25,7 @@ function validation() {
   //Almacena datos del usuario para NavBar
 
   localStorage.setItem("Usuario", user);
-  localStorage.setItem("Contrasena", pass);
+  //localStorage.setItem("Contrasena", pass);
 
 }
 

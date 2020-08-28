@@ -40,6 +40,8 @@ var getJSONData = function(url){
     });
 }
 
+// Cierra sesión
+
 function sessionOut(){
   localStorage.clear();
 }
