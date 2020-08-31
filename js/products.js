@@ -1,5 +1,5 @@
-const ORDER_ASC_BY_COST = "AZ";
-const ORDER_DESC_BY_COST = "ZA";
+const ORDER_ASC_BY_COST = "Menor precio";
+const ORDER_DESC_BY_COST = "Mayor precio";
 const ORDER_BY_PROD_SOLD = "Más relevantes.";
 let currentProductsArray = [];
 let currentSortCriteria = undefined;
@@ -8,6 +8,8 @@ let maxCost = undefined;
 
 function sortProducts(criteria, array){
     let result = [];
+
+    // Ordena ascendente por precio
     if (criteria === ORDER_ASC_BY_COST)
     {
         result = array.sort(function(a, b) {
@@ -15,12 +17,15 @@ function sortProducts(criteria, array){
             if ( a.cost > b.cost ){ return 1; }
             return 0;
         });
+    // Ordena descendente por precio    
     }else if (criteria === ORDER_DESC_BY_COST){
         result = array.sort(function(a, b) {
             if ( a.cost > b.cost ){ return -1; }
             if ( a.cost < b.cost ){ return 1; }
             return 0;
         });
+
+    // Ordena por relevancia segun cantidad vendidos
     }else if (criteria === ORDER_BY_PROD_SOLD){
         result = array.sort(function(a, b) {
             let aCount = parseInt(a.soldCount);
@@ -45,29 +50,55 @@ function showProductsList(){
             ((maxCost == undefined) || (maxCost != undefined && parseInt(product.cost) <= maxCost))){
 
         htmlContentToAppend += `
-        <div class="list-group-item list-group-item-action">
+        <a class="list-group-item list-group-item-action">
             <div class="row">
                 <div class="col-3">
                     <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
                 </div>
                 <div class="col">
                     <div class="d-flex w-100 justify-content-between">
-                        <h4 class="mb-1">`+ product.name +`</h4>
+                        <h4 class="mb-1 name">`+ product.name +`</h4>
                         <small class="text-muted">` + product.currency + ` ` + product.cost + `</small>
                     </div>
                     <div class="d-flex w-100 justify-content-between">
                         <h4 class="mb-1"></h4>
                         <small class="text-muted">` + product.soldCount + ` vendidos</small>
                     </div>
-                    <p class="mb-1"> ` + product.description + `</p>
+                    <p class="mb-1 desc"> ` + product.description + `</p>
                 </div>
             </div>
-        </div>
+        </a>
         `
         }
 
         document.getElementById("prod-list-container").innerHTML = htmlContentToAppend;
     }
+
+
+    let busqueda = document.getElementById("buscadorProd");
+
+    busqueda.addEventListener("input", function() {
+        
+        let dataToMayus = busqueda.value.toUpperCase();
+        let list = document.getElementById("prod-list-container");
+        var prod = list.getElementsByTagName("a");
+
+        for (let i = 0; i < prod.length; i++) {
+
+            let name = prod[i].querySelector(".name");
+            let desc = prod[i].querySelector(".desc");
+            let nameValue = name.innerHTML;
+            let descValue = desc.innerHTML;
+        
+        if (nameValue.toUpperCase().indexOf(dataToMayus) > -1 || descValue.toUpperCase().indexOf(dataToMayus) > -1) {
+             prod[i].style.display = "";
+        } else {
+            prod[i].style.display = "none";
+        }
+
+        }   
+    });
+
 }
 
 function sortAndShowProducts(sortCriteria, productsArray){
@@ -87,16 +118,6 @@ function sortAndShowProducts(sortCriteria, productsArray){
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 
-/*document.addEventListener("DOMContentLoaded", function(e){
-    getJSONData(PRODUCTS_URL).then(function(resultObj){
-        if (resultObj.status === "ok")
-        {
-            currentProductsArray = resultObj.data;
-            //Muestro los productos ordenadas
-            showProductsList();
-        }
-    });
-});*/
 
 document.addEventListener("DOMContentLoaded", function(e){
     getJSONData(PRODUCTS_URL).then(function(resultObj){
@@ -128,8 +149,9 @@ document.addEventListener("DOMContentLoaded", function(e){
     });
 
     document.getElementById("rangeFilterCount").addEventListener("click", function(){
-        //Obtengo el mínimo y máximo de los intervalos para filtrar por cantidad
-        //de productos por categoría.
+
+        //Obtengo el mínimo y máximo de los intervalos para filtrar por precio
+
         minCost = document.getElementById("rangeFilterCountMin").value;
         maxCost = document.getElementById("rangeFilterCountMax").value;
 

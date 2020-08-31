@@ -25,7 +25,6 @@ function validation() {
   //Almacena datos del usuario para NavBar
 
   localStorage.setItem("Usuario", user);
-  //localStorage.setItem("Contrasena", pass);
 
 }
 

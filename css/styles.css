@@ -155,7 +155,7 @@ a.custom-card:hover {
   text-align: center;
 }
 
-/* Formato inputs username, password */
+/* inputs username / password */
 
 #username, #password {
   width: 100%;
@@ -167,7 +167,7 @@ a.custom-card:hover {
   box-sizing: border-box;
 }
 
-/* Formato btn Login */
+/* btn Login */
 
 #btnlog {
     width: 300px;
@@ -183,6 +183,8 @@ a.custom-card:hover {
 #btnlog:hover{
   background-color:rgb(116, 4, 13);
 }
+
+/* Menu usuario */
 
 .dropbtn {
   background-color: #343a40;
@@ -228,15 +230,10 @@ a.custom-card:hover {
   background-color: rgb(214, 28, 108);
 }
 
-/* Formato mensaje error form */
+/* Mensaje error formulario */
 
 #msj{
   color:rgb(214, 28, 108);
   text-align: left;
   text-decoration: underline;
 }
-/*
-Registro y mensaje de error form
-#reg{
-  text-align: right;
-}*/
