@@ -139,7 +139,8 @@ function newComment() {
         commentDate = `${fecha.getFullYear()}-${mm}-${dd} ${hh}:${min}:${ss}`
 
         newComments.score = document.getElementById("clasification").value;
-        newComments.user = usuario;
+        let nameUser = /^([^]+)@(\w+).(\w+)$/.exec(usuario);
+        newComments.user = nameUser[1];
         newComments.dateTime = commentDate;
 
         let htmlComments = "";
