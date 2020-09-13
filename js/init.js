@@ -7,52 +7,51 @@ const PRODUCT_INFO_COMMENTS_URL = "https://japdevdep.github.io/ecommerce-api/pro
 const CART_INFO_URL = "https://japdevdep.github.io/ecommerce-api/cart/987.json";
 const CART_BUY_URL = "https://japdevdep.github.io/ecommerce-api/cart/buy.json";
 
-var showSpinner = function(){
-  document.getElementById("spinner-wrapper").style.display = "block";
+var showSpinner = function() {
+    document.getElementById("spinner-wrapper").style.display = "block";
 }
 
-var hideSpinner = function(){
-  document.getElementById("spinner-wrapper").style.display = "none";
+var hideSpinner = function() {
+    document.getElementById("spinner-wrapper").style.display = "none";
 }
 
-var getJSONData = function(url){
+var getJSONData = function(url) {
     var result = {};
     showSpinner();
     return fetch(url)
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }else{
-        throw Error(response.statusText);
-      }
-    })
-    .then(function(response) {
-          result.status = 'ok';
-          result.data = response;
-          hideSpinner();
-          return result;
-    })
-    .catch(function(error) {
-        result.status = 'error';
-        result.data = error;
-        hideSpinner();
-        return result;
-    });
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw Error(response.statusText);
+            }
+        })
+        .then(function(response) {
+            result.status = 'ok';
+            result.data = response;
+            hideSpinner();
+            return result;
+        })
+        .catch(function(error) {
+            result.status = 'error';
+            result.data = error;
+            hideSpinner();
+            return result;
+        });
 }
 
 // Cierra sesión
 
-function sessionOut(){
-  localStorage.clear();
+function sessionOut() {
+    localStorage.clear();
 }
 
 // Envia nombre de usuario al campo asignado en NavBar
 
-let usuario = localStorage.getItem("Usuario");
+const usuario = localStorage.getItem("Usuario");
 document.getElementById("USER").innerHTML = usuario;
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
-document.addEventListener("DOMContentLoaded", function(e){
-});
+document.addEventListener("DOMContentLoaded", function(e) {});
