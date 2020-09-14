@@ -131,7 +131,7 @@ function newComment() {
                 min = "0" + min;
             }
             if (ss < 10) {
-                ss = "0" + min;
+                ss = "0" + ss;
             }
         };
         dateFormat();
