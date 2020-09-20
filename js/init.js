@@ -46,12 +46,29 @@ function sessionOut() {
     localStorage.clear();
 }
 
-// Envia nombre de usuario al campo asignado en NavBar
+// Constante usuario que contiene nombre del mismo
 
 const usuario = localStorage.getItem("Usuario");
-document.getElementById("USER").innerHTML = usuario;
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
-document.addEventListener("DOMContentLoaded", function(e) {});
+
+document.addEventListener("DOMContentLoaded", function(e) {
+
+    const userInput = document.getElementById("USER"); // Define la constante con el elemento button de id="USER"
+
+    if (userInput) {
+        userInput.innerHTML = usuario; // Si el elemento existe, le agrega el nombre del usuario logueado
+    }
+    if (userInput && usuario === null) {
+
+        userInput.innerHTML = "Iniciar sesión"; // Si el elemento existe, pero la constante usuario esta vacia muestra el boton "Iniciar sesion"
+
+        userInput.addEventListener("click", () => { // funcion que redirige al login cuando se hace click sobre el boton "Iniciar sesion"
+            window.location.assign("index.html");
+        });
+
+        userInput.nextElementSibling.remove(); // Elimina el dropdown ya que el usuario no esta logueado
+    }
+});

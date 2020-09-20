@@ -44,22 +44,43 @@ function showRelatedProduct(array) {
                 let relatedProducsPosition = array[i]; // Toma como arrar el parametro indicado al llamar la funcion linea 188
                 let relatedProducts = productsList[relatedProducsPosition]; // Se combina array de productos con posicion indicada por propiedad "relatedProducts"
 
-                htmlRelatedProducts += `
-                
-                    <div class="col-lg-3 col-md-4 col-6 border m-1 shadow-sm p-3 mb-5 bg-white rounded">
-                        <div class="row">
-                            <img class="img-fluid p-2" src="${relatedProducts.imgSrc} ">
-                        </div>
-                        <div class="row p-2">
-                            <h5>${relatedProducts.name}</h5>
-                            <p>${relatedProducts.description}</p>
-                        </div>
-                        <div class="row p-2 align-bottom">
-                        <button type="button" href="product-info.html" class="btn btn-light">Ver</button>
+                htmlRelatedProducts +=
+
+                    `
+                    
+                    <div class="card mb-4 box-shadow col-sm-12 col-md-3 border m-1 shadow-sm p-2 mb-5 bg-white rounded">
+                        <div class="card-body d-flex flex-column p-0">
+                            <div class="card-title pricing-card-title"> 
+                                <img class="img-fluid p-0" src="${relatedProducts.imgSrc} ">
+                            </div>
+                            <div class="text-left mt-3 mb-4 p-2">
+                                <h5>${relatedProducts.name}</h5>
+                                <p>${relatedProducts.description}</p>
+                            </div>
+                            <button type="button" onclick="window.location.href='product-info.html'" class="btnprodrelat mt-auto btn btn-outline-secondary p-2">Ver</button>
                         </div>
                     </div>
                 
                 `
+
+                /*
+                `
+                    
+                    <div class="col-lg-3 col-md-4 col-6 border m-1 shadow-sm p-3 mb-5 bg-white rounded">
+                        <div class="row align-items-start">
+                            <img class="img-fluid p-2" src="${relatedProducts.imgSrc} ">
+                        </div>
+                        <div class="row p-2 align-items-center">
+                            <h5>${relatedProducts.name}</h5>
+                            <p>${relatedProducts.description}</p>
+                        </div>
+                        <div class="row p-2 align-items-end">
+                        <button type="button" onclick="window.location.href='product-info.html'" class="btn btn-light">Ver</button>
+                        </div>
+                    </div>
+                
+                `
+                */
                 document.getElementById("productRelated").innerHTML = htmlRelatedProducts;
             };
 
@@ -203,11 +224,27 @@ document.addEventListener("DOMContentLoaded", function(e) {
     // Peticion para mostrar comentarios desde Json
 
     getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function(resultObj) {
+
         if (resultObj.status === "ok") {
             comments = resultObj.data;
+
             //Envio comentarios formateados a html
+
             showComments(comments);
-            document.getElementById("usrComment").innerHTML = usuario;
+
+            if (usuario != null) {
+
+                document.getElementById("usrComment").innerHTML = usuario;
+
+            } else {
+
+                let buttonComment = document.getElementById("button");
+
+                buttonComment.addEventListener("click", () => {
+
+                    alert("Debes iniciar sesión para poder comentar");
+                });
+            }
         };
     });
 

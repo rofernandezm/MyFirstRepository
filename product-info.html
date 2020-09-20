@@ -22,14 +22,14 @@
             <a class="py-2 d-none d-md-inline-block" href="home.html">Inicio</a>
             <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
             <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
-            <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
             <!-- Menu usuario -->
             <div class="dropdown">
                 <button id="USER" class="dropbtn py-2 d-none d-md-inline-block"></button>
                 <div class="dropdown-content">
                     <a href="my-profile.html">Perfil</a>
                     <a href="cart.html">Mi Carrito</a>
-                    <a onclick="sessionOut()" href="index.html">Cerrar Sesión</a>
+                    <a href="sell.html">Vender</a>
+                    <a href="index.html" id="close" onclick="sessionOut()">Cerrar Sesión</a>
                 </div>
             </div>
         </div>
@@ -91,17 +91,26 @@
 
                 <!-- Contenido generado desde product-info.js-->
 
-                <div class="crow text-center text-lg-left pt-2">
-                    <div class="row mx-auto" id="productRelated"></div>
-                </div>
-
-                <dt class="my-3">Comentarios</dt>
-                <hr class="my-3">
                 <dd>
-                    <!-- Contenido generado desde product-info.js-->
-                    <ul id="productComment" class="p-0">
-                    </ul>
+                    <div class="container">
+                        <div class="card-deck mb-3 text-center" id="productRelated"></div>
+                    </div>
                 </dd>
+
+                <!-- COMENTARIOS -->
+
+                <div id="comments" class="card shadow-sm p-1 mb-5 bg-white rounded">
+                    <p class="card-body my-2 font-weight-bold">Comentarios</p>
+                </div>
+                <div class="container">
+                    <dd>
+
+                        <!-- Contenido generado desde product-info.js-->
+
+                        <ul id="productComment" class="p-0">
+                        </ul>
+                    </dd>
+                </div>
 
                 <!-- NUEVO COMENTARIO -->
                 <dt class="my-3">Agregar comentario</dt>
@@ -109,7 +118,7 @@
                 <dd class="w-75 mx-auto">
                     <form id="formComment">
                         <div class="form-group">
-                            <label for="usrComment" class="col-form-label">Usuario:</label>
+                            <label for="usrComment" class="col-form-label text-dark">Usuario:</label>
                             <p class="form-control" id="usrComment"></p>
                         </div>
                         <div class="form-group">
@@ -122,11 +131,11 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="textComment" class="col-form-label">Comentario:</label>
+                            <label for="textComment" class="col-form-label font-weight-bold">Comentario:</label>
                             <textarea class="form-control" id="textComment"></textarea>
                         </div>
                         <div class="form-group mt-2 d-flex">
-                            <button type="button" onclick="newComment()" class="btn btn-primary ml-auto">Enviar</button>
+                            <button id="buttonComment" type="button" onclick="newComment()" class="btn btn-primary ml-auto">Enviar</button>
                         </div>
                     </form>
                 </dd>

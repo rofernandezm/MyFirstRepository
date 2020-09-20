@@ -1,6 +1,8 @@
+let user;
+
 function validation() {
 
-    let user = document.getElementById("username").value;
+    user = document.getElementById("username").value;
     let pass = document.getElementById("password").value;
     const expresion = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -22,16 +24,16 @@ function validation() {
         return false;
     }
 
-    //Almacena datos del usuario para NavBar
-
-    localStorage.setItem("Usuario", user);
-
 }
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
+const myForm = document.getElementById("myForm");
 
-document.addEventListener("DOMContentLoaded", function(e) {
+myForm.addEventListener("submit", function(e) {
 
+    //Almacena datos del usuario para NavBar
+
+    localStorage.setItem("Usuario", user);
 });
