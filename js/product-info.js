@@ -55,7 +55,8 @@ function showRelatedProduct(array) {
                             </div>
                             <div class="text-left mt-3 mb-4 p-2">
                                 <h5>${relatedProducts.name}</h5>
-                                <p>${relatedProducts.description}</p>
+                                <hr>
+                                <p class="card-text">${relatedProducts.description}</p>
                             </div>
                             <button type="button" onclick="window.location.href='product-info.html'" class="btnprodrelat mt-auto btn btn-outline-secondary p-2">Ver</button>
                         </div>
@@ -126,8 +127,8 @@ function newComment() {
 
     if (newComments.description != "" || newComments.description.length > 20) {
 
-        let contador = document.getElementsByClassName("newcom").length + 1; // Contador para no superponer comentarios
-        document.getElementById("productComment").innerHTML += `<li class="media newcom" id="newcom"></li>`; // Contenedor del nuevo comentario
+        /*et contador = document.getElementsByClassName("newcom").length + 1; // Contador para no superponer comentarios
+        document.getElementById("productComment").innerHTML += `<li class="media newcom" id="newcom"></li>`; // Contenedor del nuevo comentario*/
 
         let fecha = new Date(); // Obtiene la fecha al momento de enviar el comentario
         let mm = fecha.getMonth() + 1; // Mes
@@ -169,7 +170,7 @@ function newComment() {
         let stars = `<span class="fa fa-star checked"></span>`.repeat(newComments.score);
         let starsNull = `<span class="fa fa-star"></span>`.repeat(5 - newComments.score);
 
-        htmlComments += `
+        htmlComments = `
             <div class="media-body">
                 <label class="mt-0"><strong>${newComments.user}</strong>
                     <span class="mute"> - ${newComments.dateTime}</span>
@@ -180,7 +181,8 @@ function newComment() {
                 <hr/>
             </div>  
         `
-        document.getElementsByClassName("newcom")[contador - 1].innerHTML = htmlComments; // Se resta una posicion ya que el array comienza de 0 y no coincide con el contador
+        document.getElementById("productComment").innerHTML += htmlComments;
+        //document.getElementsByClassName("newcom")[contador - 1].innerHTML = htmlComments; // Se resta una posicion ya que el array comienza de 0 y no coincide con el contador
         document.getElementById("formComment").reset();
     } else {
         alert("El mensaje debe tener un mínimo de 20 caracteres");
@@ -209,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
             productPriceHTML.innerHTML = product.currency + " " + product.cost;
             productDescriptionHTML.innerHTML = product.description;
             productCategoryHTML.innerHTML = product.category;
-            productSoldCountHTML.innerHTML = product.soldCount;
+            productSoldCountHTML.innerHTML = product.soldCount + " " + "vendidos";
 
             //Muestro las imagenes en forma de galería
             showImagesGallery(product.images);

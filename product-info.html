@@ -42,36 +42,28 @@
                 <p class="small alert-warning py-3"><strong>Nota: </strong>por simplicidad, cualquiera sea el producto seleccionado previamente, siempre se visualizará el presente: <strong>Chevrolet Onix Joy</strong>.
                 </p>
             </div>
-            <h3 id="productName"></h3>
-            <hr class="my-3">
-            <dl>
-                <dt>Precio</dt>
-                <dd>
-                    <p id="productPrice"></p>
-                </dd>
 
-                <dt>Descripción</dt>
-                <dd>
-                    <p id="productDescription"></p>
-                </dd>
+            <div class="container">
 
-                <dt>Categoría</dt>
-                <dd>
-                    <a href="category-info.html" id="productCategory"></a>
-                </dd>
+                <div class="row">
 
-                <dt>Cantidad de vendidos</dt>
-                <dd>
-                    <p id="productSoldCount"></p>
-                </dd>
+                    <div class="shadow-sm p-3 mb-5 bg-white rounded col-lg-12 m-2">
+                        <div class=" row pl-4">
+                            <p class="my-0 pr-1 text-left">
+                                <a class="text-muted" href="products.html">Volver al listado</a>
+                            </p>
+                            <p class="my-0 pr-2 text-left">
+                                <p class="my-0 pr-2">|</p>
+                                <a href="category-info.html" id="productCategory"></a>
+                            </p>
+                        </div>
+                    </div>
 
-                <dt>Imágenes ilustrativas</dt>
-                <hr class="my-3">
-                <dd>
-                    <!-- Carousel de imagenes-->
+                    <div class="col-lg-5">
 
-                    <div class="container p-0">
-                        <div id="carouselExampleControls" class="carousel slide w-75 mx-auto" data-ride="carousel">
+                        <!-- Carousel de imagenes-->
+
+                        <div id="carouselExampleControls" class="carousel slide mx-auto my-auto" data-ride="carousel">
                             <div class="carousel-inner" id="productImagesGallery">
                             </div>
                             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -84,62 +76,97 @@
                             </a>
                         </div>
                     </div>
-                </dd>
+                    <div class="col-lg-7">
 
-                <dt class="my-3">Productos relacionados</dt>
-                <hr class="my-3">
+                        <!-- Titulo del producto -->
 
-                <!-- Contenido generado desde product-info.js-->
+                        <div class="titleCont card p-1 mb-4 bg-white">
+                            <h3 id="productName" class="my-0 font-weight-bold"></h3>
+                        </div>
 
-                <dd>
-                    <div class="container">
-                        <div class="card-deck mb-3 text-center" id="productRelated"></div>
+                        <!-- Precio del producto -->
+                        <div>
+                            <div class="titleItems card p-1 bg-white">
+                                <h5 id="productPrice" class="my-0 p-2 font-weight-bold text-right"></h5>
+
+                                <!-- Cantidad de vendidos -->
+
+                                <small id="productSoldCount" class="my-0 pr-2 text-right"></small>
+                            </div>
+                        </div>
+
+                        <div class="container mt-4">
+                            <p id="productDescription"></p>
+                        </div>
+
                     </div>
-                </dd>
+                </div>
+
+                <!-- Productos relacionados-->
+
+                <div>
+                    <div class="titleCont card p-1 mt-5 mb-5 bg-white">
+                        <h5 class="card-body my-0 p-2 font-weight-bold">Productos relacionados</h5>
+                    </div>
+                    <!-- Contenido generado desde product-info.js-->
+
+                    <div class="container">
+                        <div class="card-deck mb-3" id="productRelated"></div>
+                    </div>
+                </div>
 
                 <!-- COMENTARIOS -->
 
-                <div id="comments" class="card shadow-sm p-1 mb-5 bg-white rounded">
-                    <p class="card-body my-2 font-weight-bold">Comentarios</p>
-                </div>
-                <div class="container">
-                    <dd>
+                <div>
+
+                    <div class="titleCont card p-1 mb-5 bg-white">
+                        <h5 class="card-body my-0 p-2 font-weight-bold">Comentarios</h5>
+                    </div>
+                    <div class="container">
 
                         <!-- Contenido generado desde product-info.js-->
 
-                        <ul id="productComment" class="p-0">
-                        </ul>
-                    </dd>
+                        <div id="productComment" class="p-0"></div>
+
+                    </div>
                 </div>
 
                 <!-- NUEVO COMENTARIO -->
-                <dt class="my-3">Agregar comentario</dt>
-                <hr class="my-3">
-                <dd class="w-75 mx-auto">
-                    <form id="formComment">
-                        <div class="form-group">
-                            <label for="usrComment" class="col-form-label text-dark">Usuario:</label>
-                            <p class="form-control" id="usrComment"></p>
+
+                <div>
+                    <div>
+                        <div class="titleCont card p-1 mb-5 bg-white">
+                            <h5 class="card-body my-0 p-2 font-weight-bold">Agregar comentario</h5>
                         </div>
-                        <div class="form-group">
-                            <select class="form-control" id="clasification">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="textComment" class="col-form-label font-weight-bold">Comentario:</label>
-                            <textarea class="form-control" id="textComment"></textarea>
-                        </div>
-                        <div class="form-group mt-2 d-flex">
-                            <button id="buttonComment" type="button" onclick="newComment()" class="btn btn-primary ml-auto">Enviar</button>
-                        </div>
-                    </form>
-                </dd>
-            </dl>
+                    </div>
+
+                    <div class="w-75 mx-auto">
+                        <form id="formComment">
+                            <div class="form-group">
+                                <label for="usrComment" class="col-form-label text-dark">Usuario:</label>
+                                <p class="form-control" id="usrComment"></p>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" id="clasification">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="textComment" class="col-form-label font-weight-bold">Comentario:</label>
+                                <textarea class="form-control" id="textComment"></textarea>
+                            </div>
+                            <div class="form-group mt-2 d-flex">
+                                <button id="buttonComment" type="button" onclick="newComment()" class="btn btn-primary ml-auto">Enviar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </main>
     <footer class="text-muted">

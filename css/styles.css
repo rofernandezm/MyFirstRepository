@@ -34,6 +34,7 @@
         padding-top: 6rem;
         padding-bottom: 6rem;
         background: url('../img/cover_back_sm1.png');
+        background-size: cover;
     }
 }
 
@@ -264,6 +265,7 @@ a.custom-card:hover {
 
 .btnprodrelat {
     border: none;
+    color: rgb(214, 28, 108);
 }
 
 .btnprodrelat:hover {
@@ -283,8 +285,14 @@ a.custom-card:hover {
     border: none;
 }
 
-#comments {
-    border: solid 2px;
+#comments,
+.titleCont {
+    border: none;
+    border-bottom: solid 2px;
+    border-radius: 0em 0em 0em 0em;
     border-color: rgb(214, 28, 108);
-    color: rgb(214, 28, 108);
+}
+
+.titleItems {
+    border: none;
 }
