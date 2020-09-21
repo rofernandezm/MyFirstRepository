@@ -31,10 +31,11 @@
 
 @media (max-width: 767px) {
     .jumbotron {
-        padding-top: 6rem;
-        padding-bottom: 6rem;
         background: url('../img/cover_back_sm1.png');
         background-size: cover;
+    }
+    #nameProd {
+        margin-top: 2rem;
     }
 }
 
@@ -241,6 +242,7 @@ a.custom-card:hover {
 .dropdown-content a:hover {
     background-color: rgb(214, 28, 108);
     color: white;
+    border-radius: 0.25rem;
 }
 
 .dropdown:hover .dropdown-content {
@@ -249,6 +251,13 @@ a.custom-card:hover {
 
 .dropdown:hover .dropbtn {
     background-color: rgb(214, 28, 108);
+    border-radius: 0.25rem;
+}
+
+.navlink:hover {
+    background-color: rgb(214, 28, 108);
+    text-decoration: none;
+    border-radius: 0.25rem;
 }
 
 

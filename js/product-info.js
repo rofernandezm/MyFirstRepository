@@ -14,8 +14,8 @@ function showImagesGallery(array) {
         let imageSrc = array[i];
 
         htmlContentToAppend +=
-            `<div class="carousel-item fimg">
-                <img class="d-block w-100" src="${imageSrc}">
+            `<div class="zoom carousel-item fimg">
+                <a href="${imageSrc}" target="_blank"><img class="d-block w-100" src="${imageSrc}"></a>
             </div>
             `
         document.getElementById("productImagesGallery").innerHTML = htmlContentToAppend;
@@ -64,24 +64,6 @@ function showRelatedProduct(array) {
                 
                 `
 
-                /*
-                `
-                    
-                    <div class="col-lg-3 col-md-4 col-6 border m-1 shadow-sm p-3 mb-5 bg-white rounded">
-                        <div class="row align-items-start">
-                            <img class="img-fluid p-2" src="${relatedProducts.imgSrc} ">
-                        </div>
-                        <div class="row p-2 align-items-center">
-                            <h5>${relatedProducts.name}</h5>
-                            <p>${relatedProducts.description}</p>
-                        </div>
-                        <div class="row p-2 align-items-end">
-                        <button type="button" onclick="window.location.href='product-info.html'" class="btn btn-light">Ver</button>
-                        </div>
-                    </div>
-                
-                `
-                */
                 document.getElementById("productRelated").innerHTML = htmlRelatedProducts;
             };
 
@@ -126,9 +108,6 @@ function newComment() {
     newComments.description = document.getElementById("textComment").value;
 
     if (newComments.description != "" || newComments.description.length > 20) {
-
-        /*et contador = document.getElementsByClassName("newcom").length + 1; // Contador para no superponer comentarios
-        document.getElementById("productComment").innerHTML += `<li class="media newcom" id="newcom"></li>`; // Contenedor del nuevo comentario*/
 
         let fecha = new Date(); // Obtiene la fecha al momento de enviar el comentario
         let mm = fecha.getMonth() + 1; // Mes
@@ -182,7 +161,6 @@ function newComment() {
             </div>  
         `
         document.getElementById("productComment").innerHTML += htmlComments;
-        //document.getElementsByClassName("newcom")[contador - 1].innerHTML = htmlComments; // Se resta una posicion ya que el array comienza de 0 y no coincide con el contador
         document.getElementById("formComment").reset();
     } else {
         alert("El mensaje debe tener un mínimo de 20 caracteres");
@@ -240,7 +218,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
             } else {
 
-                let buttonComment = document.getElementById("button");
+                let buttonComment = document.getElementById("buttonComment");
 
                 buttonComment.addEventListener("click", () => {
 
