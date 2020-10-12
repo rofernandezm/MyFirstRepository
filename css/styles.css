@@ -195,6 +195,7 @@ a.custom-card:hover {
     width: 300px;
     background-color: rgb(214, 28, 108);
     border: none;
+    border-radius: 0.25rem;
     margin-top: 10px;
     padding: 8px;
     color: white;
@@ -304,4 +305,12 @@ a.custom-card:hover {
 
 .titleItems {
     border: none;
+}
+
+
+/*Radio button envio*/
+
+.custom-control-input:checked~.custom-control-label::before {
+    border-color: rgb(214, 28, 108);
+    background-color: rgb(214, 28, 108);
 }
