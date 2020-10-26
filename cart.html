@@ -77,7 +77,7 @@
 
     <main role="main" class="pb-5 pt-3">
 
-        <div class="container">
+        <div class="container force-overflow">
 
             <div class="row">
 
@@ -90,7 +90,10 @@
                     <div class="card wish-list mb-3 shadow-sm p-3 mb-2 bg-white rounded">
                         <div class="card-body">
                             <h5 class="mb-4"><span id="cantItems" class="pr-2"></span><span id="item"></span></h5>
-                            <div id="products"></div>
+                            <div class="scrollbar scrollbar-primary col m-0">
+                                <div id="products" class="force-overflow"></div>
+                            </div>
+
                         </div>
                     </div>
 
@@ -102,22 +105,22 @@
                             <h5 class="mb-4 ">Tipo de envío</h5>
 
                             <div class="d-block my-3">
-                                <div class="custom-control custom-radio">
-                                    <input id="premium" name="shipmentMethod" type="radio" class="custom-control-input" required="">
+                                <div id="shipmenttype" class="custom-control custom-radio">
+                                    <input id="premium" name="shipmentMethod" type="radio" class="custom-control-input shipment" value="15" required="">
                                     <label class="custom-control-label" for="premium">Premium 2 a 5 dias (15%)</label>
                                 </div>
                                 <div class="custom-control custom-radio">
-                                    <input id="express" name="shipmentMethod" type="radio" class="custom-control-input" required="">
+                                    <input id="express" name="shipmentMethod" type="radio" class="custom-control-input shipment" value="7" required="">
                                     <label class="custom-control-label" for="express">Express 5 a 8 dias (7%)</label>
                                 </div>
                                 <div class="custom-control custom-radio">
-                                    <input id="standard" name="shipmentMethod" type="radio" class="custom-control-input" required="">
+                                    <input id="standard" name="shipmentMethod" type="radio" class="custom-control-input shipment" value="5" required="">
                                     <label class="custom-control-label" for="standard">Standard 12 a 15 dias
                                         (5%)</label>
                                 </div>
                             </div>
                             <!-- Button modal envio -->
-                            <button type="button" class="btn btn-outline-secondary btnprodrelat" data-toggle="modal" data-target="#shippingModal">Dirección de envío</button>
+                            <button id="shippingButtonModal" type="button" class="btn btn-outline-secondary btnprodrelat" data-toggle="modal" disabled="true" data-target="#shippingModal">Dirección de envío</button>
 
                             <!-- Modal envio -->
 
@@ -132,7 +135,7 @@
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                         </div>
 
-                                        <form id="shipmentForm" class="needs-validation" onsubmit="CierraPopup(event,'#shippingModal');">
+                                        <form id="shipmentForm" class="needs-validation" onsubmit="return shippingForm(event,'shippingModal')">
 
                                             <!-- Cuerpo Modal -->
 
@@ -144,11 +147,15 @@
                                                     <div class="row">
                                                         <div class="col-md-6 mb-3 pr-1">
                                                             <label for="nombre">Nombre</label>
-                                                            <input type="text" class="form-control" id="nombre" placeholder="" value="" required>
+                                                            <input type="text" class="form-control ship" id="nombre" placeholder="" pattern="[A-Za-z]+">
+                                                            <small class="invalid-feedback">Ingrese un nombre
+                                                                válido.</small>
                                                         </div>
                                                         <div class="col-md-6 mb-3 pl-1">
                                                             <label for="apellido">Apellido</label>
-                                                            <input type="text" class="form-control" id="apellido" placeholder="" value="" required>
+                                                            <input type="text" class="form-control ship" id="apellido" placeholder="" pattern="[A-Za-z]+">
+                                                            <small class="invalid-feedback">Ingrese un apellido
+                                                                válido.</small>
                                                         </div>
                                                     </div>
 
@@ -156,7 +163,9 @@
 
                                                     <div class="mb-3">
                                                         <label for="direccion">Dirección</label>
-                                                        <input type="text" class="form-control" id="direccion" placeholder="" required>
+                                                        <input type="text" class="form-control ship" id="direccion" placeholder="">
+                                                        <small class="invalid-feedback">El campo no puede estar
+                                                            vacío.</small>
                                                     </div>
 
                                                     <!-- Numero y esquina -->
@@ -164,11 +173,15 @@
                                                     <div class="row">
                                                         <div class="col-md-4 mb-3 pr-1">
                                                             <label class="d-flex justify-content-left" for="numpuerta">Número</label>
-                                                            <input type="text" class="form-control" id="numpuerta" placeholder="" required>
+                                                            <input type="text" class="form-control ship" id="numpuerta" placeholder="">
+                                                            <small class="invalid-feedback">Ingrese número de
+                                                                puerta</small>
                                                         </div>
                                                         <div class="col-md-8 mb-3 pl-1">
                                                             <label for="esquina">Esquina</label>
-                                                            <input type="text" class="form-control" id="esquina" placeholder="">
+                                                            <input type="text" class="form-control ship" id="esquina" placeholder="">
+                                                            <small class="invalid-feedback">El campo no puede estar
+                                                                vacío.</small>
                                                         </div>
                                                     </div>
 
@@ -177,17 +190,19 @@
 
                                                         <div class="col-md-4 mb-3 pr-1">
                                                             <label class="d-flex justify-content-left" for="pais">Pais</label>
-                                                            <select class="custom-select d-block w-100" id="pais" required>
+                                                            <select class="custom-select d-block w-100 ship" id="pais">
                                                                 <option value="">-</option>
                                                                 <option>Uruguay</option>
                                                             </select>
+                                                            <small class="invalid-feedback">Debe seleccionar
+                                                                país.</small>
                                                         </div>
 
                                                         <!-- Departamento -->
 
                                                         <div class="col-md-4 mb-3 px-1">
                                                             <label class="d-flex justify-content-left" for="Departamento">Departamento</label>
-                                                            <select class="custom-select d-block w-100" id="departamento" required>
+                                                            <select class="custom-select d-block w-100 ship" id="departamento">
                                                                 <option value="">-</option>
                                                                 <option>Artigas</option>
                                                                 <option>Canelones</option>
@@ -209,13 +224,17 @@
                                                                 <option>Tacuarembó</option>
                                                                 <option>Treinta y Tres</option>
                                                             </select>
+                                                            <small class="invalid-feedback">Debe seleccionar
+                                                                departamento.</small>
                                                         </div>
 
                                                         <!-- Codigo Postal -->
 
                                                         <div class="col-md-4 mb-3 pl-1">
                                                             <label class="d-flex justify-content-left" for="codigopostal">Código postal</label>
-                                                            <input type="text" class="form-control" id="codigopostal" placeholder="" required>
+                                                            <input type="text" class="form-control ship" id="codigopostal" placeholder="">
+                                                            <small class="invalid-feedback">Debe ingresar código
+                                                                postal.</small>
                                                         </div>
                                                     </div>
 
@@ -225,8 +244,10 @@
                                             <!-- Pie Modal -->
 
                                             <div class="modal-footer">
-                                                <button type="button" onclick="clearModalForm('shipmentForm')" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar y limpiar</button>
-                                                <button type="submit" class="btn btn-outline-secondary btnprodrelat">Guardar cambios</button>
+                                                <button type="button" onclick="clearModalForm('shipmentForm')" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar y
+                                                    limpiar</button>
+                                                <button type="submit" class="btn btn-outline-secondary btnprodrelat">Guardar
+                                                    cambios</button>
                                             </div>
                                         </form>
                                     </div>
@@ -243,7 +264,7 @@
                             <h5 class="mb-4">Forma de pago</h5>
 
                             <!-- Button medio de pago -->
-                            <button type="button" class="btn btn-outline-secondary btnprodrelat" data-toggle="modal" data-target="#paymentModal">Seleccione forma de pago</button>
+                            <button id="paymentButtonModal" type="button" class="btn btn-outline-secondary btnprodrelat" data-toggle="modal" data-target="#paymentModal">Seleccione forma de pago</button>
 
                             <!-- Modal medio de pago -->
                             <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
@@ -257,7 +278,7 @@
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                         </div>
 
-                                        <form id="paymentForm" class="needs-validation" onsubmit="CierraPopup(event,'#paymentModal');">
+                                        <form id="paymentForm" class="needs-validation" onsubmit="return paymentForm(event,'paymentModal')">
 
                                             <!-- Cuerpo Modal -->
 
@@ -269,7 +290,7 @@
                                                     <div class="row">
                                                         <div class="d-block mb-3">
                                                             <div class="custom-control custom-radio">
-                                                                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" required="">
+                                                                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input payment-radio">
                                                                 <label class="custom-control-label mr-2" for="credit">Tarjeta de crédito</label>
                                                                 <img class="mr-2" width="45px" src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg" alt="Visa">
                                                                 <img class="mr-2" width="45px" src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg" alt="Mastercard">
@@ -281,13 +302,18 @@
 
                                                     <div class="row">
                                                         <div class="col-md-12 mb-3">
-                                                            <label for="cc-name">Nombre</label>
-                                                            <input type="text" class="form-control" id="cc-name" placeholder="" required="">
-                                                            <small class="text-muted">Nombre completo como se muestra en la tarjeta de crédito</small>
+                                                            <label for="tdcName">Nombre <small
+                                                                    class="text-muted pl-1">(como se muestra impreso en
+                                                                    su tarjeta de crédito)</small></label>
+                                                            <input id="tdcName" disabled="true" type="text" class="form-control tdcInput pay">
+                                                            <small class="invalid-feedback">Ingrese un nombre
+                                                                válido.</small>
                                                         </div>
                                                         <div class="col-md-12 mb-3">
-                                                            <label for="cc-number">Número de tarjeta</label>
-                                                            <input type="text" class="form-control" minlength="16" maxlength="16" id="cc-number" placeholder="" required="">
+                                                            <label for="tdcNumber">Número de tarjeta</label>
+                                                            <input id="tdcNumber" disabled="true" type="text" class="form-control tdcInput pay" placeholder="">
+                                                            <small class="invalid-feedback">Ingrese un número de tarjeta
+                                                                válido de 16 dígitos.</small>
                                                         </div>
                                                     </div>
 
@@ -298,16 +324,16 @@
                                                             <label class="px-1">Expiración</label>
                                                             <div class="row">
                                                                 <div class="col-md-6 pr-1">
-                                                                    <input type="text" class="form-control" maxlength="2" id="month-expiration" placeholder="MM" required="">
+                                                                    <input id="tdcMonth" disabled="true" type="text" class="form-control tdcInput pay" maxlength="2" placeholder="MM">
                                                                 </div>
                                                                 <div class="col-md-6 pl-1">
-                                                                    <input type="text" class="form-control" maxlength="2" id="year-expiration" placeholder="AA" required="">
+                                                                    <input id="tdcYear" disabled="true" type="text" class="form-control tdcInput pay" maxlength="2" placeholder="AA">
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3 ml-5 mb-3">
-                                                            <label for="cc-cvv">CVV</label>
-                                                            <input type="number" class="form-control" id="cc-cvv" placeholder="" required="">
+                                                            <label for="tdc-cvv">CVV</label>
+                                                            <input id="tdc-cvv" disabled="true" type="number" class="form-control tdcInput pay" placeholder="">
                                                         </div>
                                                     </div>
 
@@ -318,24 +344,29 @@
                                                     <div class="row">
                                                         <div class="d-block mb-3">
                                                             <div class="custom-control custom-radio">
-                                                                <input id="transf" name="paymentMethod" type="radio" class="custom-control-input" required="">
+                                                                <input id="transf" name="paymentMethod" type="radio" class="custom-control-input payment-radio">
                                                                 <label class="custom-control-label mr-2" for="transf">Transferencia bancaria</label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-12 mb-3">
-                                                            <input type="text" class="form-control" id="bankcountnumber" placeholder="" required="">
+                                                            <input id="bankcountnumber" disabled="true" type="text" class="form-control pay" placeholder="">
+                                                            <small class="invalid-feedback">Ingrese un número cuenta
+                                                                bancaria válido</small>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div id="seleccionformadepago" class="col-md-12 order-md-1"></div>
                                             </div>
 
                                             <!-- Pie Modal -->
 
                                             <div class="modal-footer">
-                                                <button type="button" onclick="clearModalForm('paymentForm')" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar y limpiar</button>
-                                                <button type="submit" class="btn btn-outline-secondary btnprodrelat">Guardar cambios</button>
+                                                <button type="button" onclick="clearModalForm('paymentForm')" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar y
+                                                    limpiar</button>
+                                                <button type="submit" class="btn btn-outline-secondary btnprodrelat">Guardar
+                                                    cambios</button>
                                             </div>
                                         </form>
                                     </div>
@@ -352,8 +383,9 @@
                     <!-- Costos -->
                     <div class="card wish-list mb-3 shadow-sm p-3 mb-5 bg-white rounded">
                         <div class="card-body pt-4 ">
-
-                            <h5 class="mb-3">Costos</h5>
+                            <div class="row d-flex row justify-content-between">
+                                <h5 class="mb-3">Costos</h5>
+                            </div>
 
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
@@ -367,7 +399,7 @@
                                     Envío
                                     <div class="row">
                                         <span id="monenvio" class="mr-2"></span>
-                                        <span id="ce">Gratis</span>
+                                        <span id="ce">-</span>
                                     </div>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
@@ -381,14 +413,19 @@
                                 </li>
                             </ul>
 
-                            <button type="button" class="btn btn-block btn-outline-secondary btnprodrelat">Finalizar compra</button>
+                            <button type="button" onclick="return finalizarCompra()" class="btn btn-block btn-outline-secondary btnprodrelat">Finalizar compra</button>
 
                         </div>
                     </div>
                 </div>
 
             </div>
-
+            <div class="row">
+                <div id="comprafinalizada" class="col"></div>
+                <div id="datosdeenvio" class="col"></div>
+                <div id="tipodeenvio" class="col"></div>
+                <div id="formadepago" class="col"></div>
+            </div>
         </div>
 
     </main>

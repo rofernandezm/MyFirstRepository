@@ -51,7 +51,7 @@ function showRelatedProduct(array) {
                     <div class="card mb-4 box-shadow col-sm-12 col-md-3 border m-1 shadow-sm p-2 mb-5 bg-white rounded">
                         <div class="card-body d-flex flex-column p-0">
                             <div class="card-title pricing-card-title"> 
-                                <img class="img-fluid p-0" src="${relatedProducts.imgSrc} ">
+                                <img class="img-fluid p-0" src="${relatedProducts.imgSrc}">
                             </div>
                             <div class="text-left mt-3 mb-4 p-2">
                                 <h5>${relatedProducts.name}</h5>

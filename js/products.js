@@ -49,25 +49,26 @@ function showProductsList() {
             ((maxCost == undefined) || (maxCost != undefined && parseInt(product.cost) <= maxCost))) {
 
             htmlContentToAppend += `
-        <a href="product-info.html" class="list-group-item list-group-item-action">
-            <div class="row">
-                <div class="col-3">
-                    <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
-                </div>
-                <div class="col">
-                    <div class="d-flex w-100 justify-content-between mt-3">
-                        <h4 class="mb-1 name">` + product.name + `</h4>
-                        <h6 class="text-muted font-weight-bold">` + product.currency + ` ` + product.cost + `</h6>
+            <div class="col-md-4 p-2 item">
+                <div class="card border shadow-sm mb-1 bg-white rounded">
+                    <div class="card-body d-flex flex-column p-0">
+                        <div class="card-title pricing-card-title"> 
+                            <img class="img-fluid p-0" src="${product.imgSrc}" alt="${product.description}">
+                        </div>
+                        <div class="text-left mt-3 mb-4 p-2">
+                            <h5 class="name">${product.name}</h5>
+                            <hr>
+                            <p class="card-text desc">${product.description}</p>
+                            <div class="d-flex w-100 justify-content-between mt-5">
+                                <small class="mt-auto text-muted">` + product.soldCount + ` vendidos</small>
+                                <h5 class="text-muted font-weight-bold">` + product.currency + ` ` + product.cost + `</h5>
+                            </div>
+                        </div>
+                        <button type="button" onclick="window.location.href='product-info.html'" class="btnprodrelat mt-auto btn btn-outline-secondary p-2">Ver</button>
                     </div>
-                    <div class="d-flex w-100 justify-content-between">
-                        <p class="mb-1 desc"> ` + product.description + `</p>
-                        <small class="text-muted ml-auto">` + product.soldCount + ` vendidos</small>
-                    </div>
-                    <!--p class="mb-1 desc"> ` + product.description + `</p-->
                 </div>
             </div>
-        </a>
-        `
+            `
         }
 
         document.getElementById("prod-list-container").innerHTML = htmlContentToAppend;
@@ -81,7 +82,7 @@ function showProductsList() {
 
         let dataToMayus = busqueda.value.toUpperCase();
         let list = document.getElementById("prod-list-container");
-        var prod = list.getElementsByTagName("a");
+        var prod = list.getElementsByClassName("item");
 
         for (let i = 0; i < prod.length; i++) {
 

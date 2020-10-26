@@ -1,6 +1,15 @@
 let subTotal = document.getElementById("st"); // Variable que almacena ubicacion de subtotal del carrito
 let costoTotal = document.getElementById("ct"); // Variable que almacena ubicacion de costo total del carrito
+let costoEnvio = document.getElementById("ce"); // Variable que almacena ubicacion de costo de envio
+let porcentajeEnvio;
+let valorCostoEnvio;
 let arraySubtotales = document.getElementsByClassName("subtotal"); // Variable que almacena array de elementos con clase "subtotal"
+let msgCompraFinalizada;
+
+let numFormat = function(valor) { // Funcion que toma un valor numerico y le da un formato numerico
+    let price = new Intl.NumberFormat().format(valor);
+    return price;
+}
 
 function showCartProductsAndTotalCost(array) { // Funcion que muestra productos y costos
 
@@ -82,8 +91,17 @@ function showCartProductsAndTotalCost(array) { // Funcion que muestra productos 
 };
 
 function calculoDeCostos(subtotales) { // Funcion que recibe por parametro el array donde se almacenan los subtotales por cada item y calcula el subtotal del carrito
-    subTotal.innerHTML = new Intl.NumberFormat().format(cartTotalCost(subtotales));
-    costoTotal.innerHTML = new Intl.NumberFormat().format(cartTotalCost(subtotales));
+
+    subTotal.innerHTML = numFormat(cartSubtotalCost(subtotales));
+
+    if (porcentajeEnvio != 'undefined' && porcentajeEnvio != null) {
+        valorCostoEnvio = (cartSubtotalCost(subtotales)) * (porcentajeEnvio / 100);
+        document.getElementById("monenvio").innerHTML = "UYU";
+        costoEnvio.innerHTML = numFormat(valorCostoEnvio);
+        costoTotal.innerHTML = numFormat((cartSubtotalCost(subtotales)) + valorCostoEnvio);
+    } else {
+        costoTotal.innerHTML = numFormat(cartSubtotalCost(subtotales));
+    }
 };
 
 function cantItemsCart() { // Funcion que calcula la cantida de items en carrito
@@ -119,29 +137,31 @@ function cambio(tipo, costo) { // Funcion que recibe por parametro moneda(USD o 
     return costoEnUyu;
 }
 
-function cartTotalCost(array) { // Funcion que calcula el costo total del carrito recibiendo un array por parametro
+function cartSubtotalCost(array) { // Funcion que calcula el subtotal del carrito recibiendo un array por parametro
 
     let totalCost = 0; // Variable donde se va adicionando los subtotales por item
 
     for (let i = 0; i < array.length; i++) {
         let str = array[i];
         let id;
+        let newI = i;
 
-        if (typeof(str) != 'undefined' && str != null) { // Evalua que exista el elemento html
+        if (str != 'undefined' && str != null) { // Evalua que exista el elemento html
             str = str.innerHTML; // Como no es indefinido, podemos tomar el string del elemento
             id = "moneda" + (i); // A cada item se le genero dinamicamente un id donde se guardaba la moneda del mismo
             monedaItem = document.getElementById(id); // Se Obtiene el elemento donde se guarda la moneda mediante el id
 
-            if (typeof(monedaItem) != 'undefined' && monedaItem != null) { // Evalua que exista el elemento html
-                monedaItem = monedaItem.innerHTML; // Como no es indefinido, podemos tomar el contenido del elemento
+            if (monedaItem != 'undefined' && monedaItem != null) { // Evalua que exista el elemento html
+                monedaItem = monedaItem.innerHTML; // Como no   es indefinido, podemos tomar el contenido del elemento
                 precio = parseInt(str); //Se transforman en valor numerico por parseInt
                 totalCost += cambio(monedaItem, precio); //Se adiciona a la variable declarada anteriormente
             } else {
-                while (typeof(monedaItem) === 'undefined' || monedaItem === null) { // Mientras no exite el elemento, se suma una unidad a i para obtener el id siguiente que se genero de forma automatica
-                    i = (i + 1);
-                    id = "moneda" + (i);
-                    monedaItem = document.getElementById(id).innerHTML; // Se almacena en la variable monedaItem el elemento obtenido mediante el id para volver a evaluarse
+                while (monedaItem === 'undefined' || monedaItem === null) { // Mientras no exite el elemento, se suma una unidad a i para obtener el id siguiente que se genero de forma automatica
+                    newI = (newI + 1);
+                    id = "moneda" + (newI);
+                    monedaItem = document.getElementById(id); // Se almacena en la variable monedaItem el elemento obtenido mediante el id para volver a evaluarse
                 }
+                monedaItem = document.getElementById(id).innerHTML;
                 precio = parseInt(str) //Se transforman en valor numerico por parseInt
                 totalCost += cambio(monedaItem, precio); //Se adiciona a la variable declarada anteriormente
             }
@@ -166,12 +186,300 @@ function CierraPopup(evt, id) { // Recive el evento y el id para cerrar cualquie
     $(id).modal('hide'); //ocultamos el modal
     $('body').removeClass('modal-open'); //eliminamos la clase del body para poder hacer scroll
     $('.modal-backdrop').remove(); //eliminamos el backdrop del modal
-    $(id).removeClass('show'); //eliminamos la clase show para dejar de mostrar la ventana del modal
+    $("#" + id).removeClass('show'); //eliminamos la clase show para dejar de mostrar la ventana del modal
     evt.preventDefault(); //Detiene el evento que refresca la pagina
 }
 
-function clearModalForm(id) { // Recibe por parametro ir y resetea el formulario
+function clearModalForm(id) { // Recibe por parametro id y resetea el formulario
     document.getElementById(id).reset();
+    disabled(); // Deshabilita los campos de Tarjeta de credito
+    let itemShip = document.getElementsByClassName("ship"); // Quita las alertas de formulario valido/invalido modal envio
+    for (let i = 0; i < itemShip.length; i++) {
+        id = itemShip[i].id;
+        document.getElementById(id).classList.remove("is-invalid");
+        document.getElementById(id).classList.remove("is-valid");
+    }
+    let itemPay = document.getElementsByClassName("pay"); // Quita las alertas de formulario valido/invalido modal pago
+    for (let i = 0; i < itemPay.length; i++) {
+        id = itemPay[i].id;
+        document.getElementById(id).classList.remove("is-invalid");
+        document.getElementById(id).classList.remove("is-valid");
+    }
+    document.getElementById("bankcountnumber").disabled = true; // Deshabilita los campos de cuenta bancaria
+}
+
+function shipping() { // Verifica que se haya seleccionado tipo de envio y calcula el costo en base a la opcion seleccionada
+    let shipmentRadioButtons = document.getElementsByClassName("shipment");
+
+    for (let i = 0; i < (shipmentRadioButtons.length); i++) {
+
+        shipmentRadioButtons[i].addEventListener("click", function() {
+            let shipmentButton = document.getElementById("shippingButtonModal");
+            let premium = document.getElementById("premium").checked;
+            let express = document.getElementById("express").checked;
+            let standard = document.getElementById("standard").checked;
+
+            if ((premium) || (express) || (standard)) {
+                shipmentButton.disabled = false;
+                let id = this.id;
+                porcentajeEnvio = (document.getElementById(id).value);
+                calculoDeCostos(arraySubtotales);
+            }
+        });
+    }
+}
+
+function paymentInput() { // Funcion que habilita o deshabilita los campos del modal para pagos en funcion de lo seleccionado
+
+    let paymentRadioButtons = document.getElementsByClassName("payment-radio");
+
+    for (let i = 0; i < (paymentRadioButtons.length); i++) {
+
+        paymentRadioButtons[i].addEventListener("click", function() {
+
+            let tdc = document.getElementById("credit").checked;
+            let transf = document.getElementById("transf").checked;
+            let bankCount = document.getElementById("bankcountnumber");
+
+            if (tdc) {
+                bankCount.disabled = true;
+                enabled();
+            } else if (transf) {
+                disabled();
+                bankCount.disabled = false;
+            }
+
+        })
+    }
+}
+
+function enabled() { // Funcion que habilita los campos de tarjeta de credito
+    let tdcInput = document.getElementsByClassName("tdcInput");
+    for (let i = 0; i < tdcInput.length; i++) {
+        let tdcItem = tdcInput[i].attributes[0].nodeValue;
+        document.getElementById(tdcItem).disabled = false;
+    }
+}
+
+function disabled() { // Funcion que deshabilita los campos de tarjeta de credito
+    let tdcInput = document.getElementsByClassName("tdcInput");
+    for (let i = 0; i < tdcInput.length; i++) {
+        let tdcItem = tdcInput[i].attributes[0].nodeValue;
+        document.getElementById(tdcItem).disabled = true;
+    }
+}
+
+// Validacion de formulario envio
+
+function shippingForm(evt, id) { // En caso de fallar en algun campo, retorna false deteniendo la funcion y haciendo enfoque en el input correpondiente
+    let status = true;
+    let nombre = document.getElementById("nombre");
+    let apellido = document.getElementById("apellido");
+    let direccion = document.getElementById("direccion");
+    let numero = document.getElementById("numpuerta");
+    let esquina = document.getElementById("esquina");
+    let pais = document.getElementById("pais");
+    let departamento = document.getElementById("departamento");
+    let codigoPostal = document.getElementById("codigopostal");
+
+    if (nombre.value.trim() == "") {
+        nombre.className += " is-invalid";
+        status = false;
+        nombre.focus();
+    } else if (apellido.value.trim() == "") {
+        apellido.className += " is-invalid";
+        status = false;
+        apellido.focus();
+    } else if (direccion.value.trim() == "") {
+        direccion.className += " is-invalid";
+        status = false;
+        direccion.focus();
+    } else if (numero.value.trim() == "") {
+        numero.className += " is-invalid";
+        status = false;
+        numero.focus();
+    } else if (esquina.value.trim() == "") {
+        esquina.className += " is-invalid";
+        status = false;
+        esquina.focus();
+    } else if (pais.value.trim() == "") {
+        pais.className += " is-invalid";
+        status = false;
+        pais.focus();
+    } else if (departamento.value.trim() == "") {
+        departamento.className += " is-invalid";
+        status = false;
+        departamento.focus();
+    } else if (codigoPostal.value.trim() == "") {
+        codigoPostal.className += " is-invalid";
+        status = false;
+        codigoPostal.focus();
+    }
+
+    if (status == true) {
+        let modal = document.getElementById("shippingModal").attributes[0].nodeValue;
+        if (modal.includes("show")) { // Verifica que el modal este abierto o no
+            CierraPopup(evt, id);
+        }
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function validShipForm() { // Funcion que se ejecuta en tiempo real y a medida que el usuario digita informa que sea correcto o no
+    let itemShip = document.getElementsByClassName("ship");
+
+    for (let i = 0; i < itemShip.length; i++) {
+        itemShip[i].addEventListener("input", function() {
+            id = this.id;
+            if (document.getElementById(id).value.trim() == "") {
+                document.getElementById(id).className += " is-invalid";
+            } else if (document.getElementById(id).value.trim() != "") {
+                document.getElementById(id).classList.remove("is-invalid");
+                document.getElementById(id).className += " is-valid";
+            }
+        })
+    }
+}
+
+function validpayForm() { // Funcion similar a la anterior pero con los campos de pagos
+
+    let itemPay = document.getElementsByClassName("pay");
+
+    for (let i = 0; i < itemPay.length; i++) {
+        itemPay[i].addEventListener("input", function() {
+            id = this.id;
+            if (document.getElementById(id).value.trim() == "") {
+                document.getElementById(id).className += " is-invalid";
+            } else if (document.getElementById(id).value.trim() != "") {
+                document.getElementById(id).classList.remove("is-invalid");
+                document.getElementById(id).className += " is-valid";
+            }
+        })
+    }
+}
+
+// Validacion de formulario envio
+
+function paymentForm(evt, id) { // En caso de fallar en algun campo, retorna false deteniendo la funcion y haciendo enfoque en el input correpondiente
+    let status = true; // Auxiliar que se utiliza para frenar la funcion
+    let nombreTDC = document.getElementById("tdcName");
+    let numeroTDC = document.getElementById("tdcNumber");
+    let monthTDC = document.getElementById("tdcMonth");
+    let yearTDC = document.getElementById("tdcYear");
+    let cvvTDC = document.getElementById("tdc-cvv");
+    let bankcountnumber = document.getElementById("bankcountnumber");
+    let tdc = document.getElementById("credit").checked;
+    let transf = document.getElementById("transf").checked;
+
+    if (!tdc && !transf) { // Evalua que se haya seleccionado forma de pago, de lo contrario emite una alerta en el modal
+        let formaDePago = document.getElementById("seleccionformadepago");
+        let alertFormaDePago = `
+        <div class="w-25 alert alert-danger alert-dismissible fade show" role="alert">
+            <h4 class="alert-heading"><strong>Atención</strong></h4>
+            <hr>
+            <p>Debes seleccionar y completar forma de pago.</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        `
+        formaDePago.innerHTML = alertFormaDePago; // Se envia al html la alerta generada
+        status = false;
+    } else if (tdc) {
+        if (nombreTDC.value.trim() == "") {
+            nombreTDC.className += " is-invalid";
+            status = false;
+            nombreTDC.focus();
+        } else if (numeroTDC.value.trim() == "") {
+            numeroTDC.className += " is-invalid";
+            status = false;
+            numeroTDC.focus();
+        } else if (monthTDC.value.trim() == "") {
+            monthTDC.className += " is-invalid";
+            status = false;
+            monthTDC.focus();
+        } else if (yearTDC.value.trim() == "") {
+            yearTDC.className += " is-invalid";
+            status = false;
+            yearTDC.focus();
+        } else if (cvvTDC.value.trim() == "") {
+            cvvTDC.className += " is-invalid";
+            status = false;
+            cvvTDC.focus();
+        }
+    } else if (transf) {
+        if (bankcountnumber.value.trim() == "") {
+            bankcountnumber.className += " is-invalid";
+            status = false;
+            bankcountnumber.focus();
+        }
+    }
+    if (status == true) {
+        let modal = document.getElementById("paymentModal").attributes[0].nodeValue;
+        if (modal.includes("show")) { // Verifica que el modal este abierto o no
+            CierraPopup(evt, id);
+        }
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function finalizarCompra() { // Verifica que este todo correcto para completar la compra, de lo contrario genera la alerta correspondiente
+    if (porcentajeEnvio != 'undefined' && porcentajeEnvio != null) {
+        if (!(shippingForm("submit", "shippingModal"))) { // Alerta si no se completaron los datos de envio
+            let datosEnvio = document.getElementById("datosdeenvio");
+            let alertDatosEnvio = `
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Debes completar datos de envío.</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            `
+            datosEnvio.innerHTML = alertDatosEnvio;
+            return false
+        }
+    } else { // Alerta si no se selecciono el tipo de envio
+        let tipoDeEnvio = document.getElementById("tipodeenvio");
+        let alertTipoEnvio = `
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Debes seleccionar método de envío.</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        `
+        tipoDeEnvio.innerHTML = alertTipoEnvio;
+        return false
+    }
+
+    if (!(paymentForm("submit", "paymentModal"))) { // Alerta si no se completo formulario de forma de pago
+        let formaDePago = document.getElementById("formadepago");
+        let alertFormaDePago = `
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Debes completar forma de pago.</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        `
+        formaDePago.innerHTML = alertFormaDePago;
+        return false
+    } else { // Alerta si la compra se realizo correctamente
+        let compraFinalizada = document.getElementById("comprafinalizada");
+        let alertcompraFinalizada = `
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>${msgCompraFinalizada}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        `
+        compraFinalizada.innerHTML = alertcompraFinalizada;
+    }
 }
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
@@ -179,10 +487,20 @@ function clearModalForm(id) { // Recibe por parametro ir y resetea el formulario
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e) {
     let cartInfo = {};
-    getJSONData(CART_INFO_URL_2).then(function(resultObj) {
+    getJSONData("https://raw.githubusercontent.com/Marcos170393/products-cart-info/main/json").then(function(resultObj) {
         if (resultObj.status === "ok") {
             cartInfo = resultObj.data.articles;
             showCartProductsAndTotalCost(cartInfo);
         };
     });
+    shipping();
+    paymentInput();
+    validShipForm();
+    validpayForm();
+
+    getJSONData(CART_BUY_URL).then(result => { // Se obtiene el mensaje de compra finalizada desde el JSON
+        if (result.status === "ok") {
+            msgCompraFinalizada = result.data.msg;
+        }
+    })
 })
