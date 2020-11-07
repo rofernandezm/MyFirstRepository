@@ -218,6 +218,7 @@ a.custom-card:hover {
     padding: 16px;
     font-size: 16px;
     border: none;
+    cursor: pointer;
 }
 
 .dropdown {
@@ -256,11 +257,10 @@ a.custom-card:hover {
     border-radius: 0.25rem;
 }
 
-.nav-link:hover {
+.navlink:hover {
     background-color: rgb(214, 28, 108);
     text-decoration: none;
     border-radius: 0.25rem;
-    padding-left: 1rem;
 }
 
 
@@ -356,8 +356,4 @@ a.custom-card:hover {
 
 .scrollbar-primary {
     scrollbar-color: rgb(214, 28, 108) #F5F5F5;
-}
-
-.userData.form-control:disabled {
-    background-color: transparent;
 }

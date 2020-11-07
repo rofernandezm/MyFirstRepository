@@ -60,8 +60,8 @@ function showProductsList() {
                             <hr>
                             <p class="card-text desc">${product.description}</p>
                             <div class="d-flex w-100 justify-content-between mt-5">
-                                <small class="mt-auto text-muted">${product.soldCount} vendidos</small>
-                                <h5 class="text-muted font-weight-bold">${product.currency} ${product.cost}</h5>
+                                <small class="mt-auto text-muted">` + product.soldCount + ` vendidos</small>
+                                <h5 class="text-muted font-weight-bold">` + product.currency + ` ` + product.cost + `</h5>
                             </div>
                         </div>
                         <button type="button" onclick="window.location.href='product-info.html'" class="btnprodrelat mt-auto btn btn-outline-secondary p-2">Ver</button>
