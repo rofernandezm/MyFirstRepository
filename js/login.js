@@ -8,7 +8,7 @@ function validation() {
 
     if (user == "" || pass == "") {
 
-        document.getElementById("msj").innerHTML = "Formulario inválido. Todos los campos son obligatorios.";
+        document.getElementById("msj").innerHTML = `Formulario inválido.<br> Todos los campos son obligatorios.`;
         return false;
 
     } else if (!expresion.test(user)) {
@@ -37,3 +37,12 @@ myForm.addEventListener("submit", function(e) {
 
     localStorage.setItem("Usuario", user);
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    if (usuario) {
+
+        document.location.href = "home.html";
+    }
+
+})

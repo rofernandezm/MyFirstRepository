@@ -41,6 +41,12 @@
     }
 }
 
+@media (max-width: 576px) {
+    .wave {
+        display: none;
+    }
+}
+
 .jumbotron p:last-child {
     margin-bottom: 0;
 }
@@ -169,11 +175,11 @@ a.custom-card:hover {
     color: rgb(95, 95, 95);
 }
 
-
-/* Imagen Login */
-
-#imlog {
-    text-align: center;
+#login {
+    background-color: white;
+    background-clip: padding-box;
+    border-radius: 5px;
+    padding: 2rem;
 }
 
 
@@ -194,12 +200,9 @@ a.custom-card:hover {
 /* btn Login en index */
 
 #btnlog {
-    width: 300px;
     background-color: rgb(214, 28, 108);
     border: none;
     border-radius: 0.25rem;
-    margin-top: 10px;
-    padding: 8px;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
@@ -207,6 +210,20 @@ a.custom-card:hover {
 
 #btnlog:hover {
     background-color: rgb(116, 4, 13);
+}
+
+#logGoogle:hover,
+#logGuest:hover {
+    border-color: rgb(214, 28, 108);
+    background-color: white;
+}
+
+.wave {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    z-index: -1;
 }
 
 
@@ -269,7 +286,6 @@ a.custom-card:hover {
 #msj {
     color: rgb(214, 28, 108);
     text-align: left;
-    text-decoration: underline;
 }
 
 

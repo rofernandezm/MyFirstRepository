@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
     if (userInput) {
         userInput.innerHTML = usuario; // Si el elemento existe, le agrega el nombre del usuario logueado
     }
-    if (userInput && usuario === null) {
+    if (userInput != null && usuario === null || userInput != null && usuario == "") {
 
         userInput.innerHTML = "Iniciar sesión"; // Si el elemento existe, pero la constante usuario esta vacia muestra el boton "Iniciar sesion"
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!-- saved from url=(0049)https://getbootstrap.com/docs/4.3/examples/album/ -->
-<html lang="es">
+
+<html lang="es" class="h-100">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -10,29 +10,40 @@
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
     <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
 </head>
 
-<body style="margin-top: 5rem">
-    <div id="imlog">
-        <img src="img/login1.png" alt="login" width="400px" height="a">
+<body class="h-100">
+    <img class="wave" src="img/wave.png">
+    <div class="container h-100">
+        <div class="row justify-content-center h-100">
+            <form class="align-self-center form-signin" id="myForm" onsubmit="return validation()" action="home.html">
+                <div class="col- col-sm-9 col-md-6 mx-auto mb-4">
+                    <img class="mx-auto w-100" src="img/login2.png" alt="" height="auto">
+                </div>
+                <div id="login" class="col- col-sm-7 col-md-5 mx-auto shadow">
+                    <div class="input-group">
+                        <label for="username">Usuario</label>
+                        <input id="username" name="username" placeholder="Ingresa tu email" size="25" type="text" autocomplete="off" class="form-control mt-0">
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Contraseña</label>
+                        <input id="password" name="password" type="password" placeholder="Contraseña" class="form-control mt-0">
+                    </div>
+                    <h6 class="mt-1 text-center"><strong id="msj"></strong></h6>
+                    <input id="btnlog" type="submit" value="Ingresar" class="btn btn-primary mt-2 p-2 w-100">
+                    <button type="button" id="logGuest" onclick="location.href='home.html'" class="btn btn-light mt-2 p-2 w-100">Ingresar como invitado</button>
+
+                </div>
+
+            </form>
+        </div>
     </div>
-    <div class="cont">
 
-        <!-- Formulario -->
-
-        <form id="myForm" onsubmit="return validation()" action="home.html">
-            <div id="login">
-                <label for="username">Usuario</label>
-                <input id="username" name="username" placeholder="Ingresa tu email" size="25" type="text" autocomplete="off">
-                <label for="password">Contraseña</label>
-                <input id="password" name="password" type="password" placeholder="Contraseña">
-                <input id="btnlog" type="submit" value="Ingresar">
-                <h5 id="msj"></h5>
-            </div>
-        </form>
-    </div>
-
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/init.js"></script>
     <script src="js/login.js"></script>
 </body>

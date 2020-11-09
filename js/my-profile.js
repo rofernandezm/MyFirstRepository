@@ -1,40 +1,17 @@
-function modificarData() {
-    document.getElementById("guardarDatos").style.visibility = "visible";
-    enableDisable();
-
-}
-
-function enableDisable() {
-
-    let inputValue = Array.from(document.getElementsByClassName("profile"));
-    const value = inputValue.map((i) => { return i.id })
-
-    value.forEach((id) => {
-        let input = document.getElementById(id);
-        if (input.disabled) {
-            input.disabled = false;
-        } else {
-            input.disabled = true;
-        }
-    })
-
-}
-
-
-function saveData() {
+function saveData() { // Funcion que obtiene los datos ingresados en el modal y los almacena en local storage
 
     let nombres = document.getElementById("input-first-name");
     let apellidos = document.getElementById("input-last-name");
     let edad = document.getElementById("input-age");
     let telefono = document.getElementById("input-telefono");
     let email = document.getElementById("input-email");
-    let alerta;
+    let alerta; // Variable auxiliar para generar alerta de boostrap dinamicamente
     let contAlerta = document.getElementById("alerta");
 
-    let inputValue = Array.from(document.getElementsByClassName("profile"));
-    const value = inputValue.map((i) => { return i.value })
+    let inputValue = Array.from(document.getElementsByClassName("profile")); // Se genera un array por todos los elementos con clase Profile
+    const value = inputValue.map((i) => { return i.value }) //Se genera un nuevo array solo con los valores de los elementos en inputValue
 
-    let obj = new Object();
+    let obj = new Object(); // Se declara el objeto donde se agregaran los datos del usuario
 
     obj.nombres = nombres.value;
     obj.apellidos = apellidos.value;
@@ -42,9 +19,9 @@ function saveData() {
     obj.telefono = telefono.value;
     obj.email = email.value;
 
-    let objStr = JSON.stringify(obj);
+    let objStr = JSON.stringify(obj); // Se convierte el objeto a string
 
-    if (value.includes("")) {
+    if (value.includes("")) { // Se verifica que en los input no exista valores vacios de lo contrario se genera una alerta en pantalla
         alerta =
             `<div class="alert alert-danger" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -57,14 +34,14 @@ function saveData() {
 
         contAlerta.innerHTML = alerta;
 
-    } else if (usuario != null) {
-        localStorage.setItem("userDataObj", objStr);
+    } else if (usuario != null) { // Se verifica que previamente el usuario este logueado, de lo contrario emite una alerta indicando que debe iniciar sesion
+        localStorage.setItem("userDataObj", objStr); // Se guardan los datos del usuario en Local Storage
         userData()
-        $('#profileModal').modal('hide');
+        $('#profileModal').modal('hide'); // Hasta la linea 43 se ejecutan comandos para cerrar el modal
         $('body').removeClass('modal-open');
         $('body').css('padding-right', '0px');
         $('.modal-backdrop').remove();
-        document.location.reload();
+        document.location.reload(); // Se recarga la pagina para actualizar foto de perfil
     } else {
         alerta =
             `<div class="alert alert-danger" role="alert">
@@ -81,7 +58,7 @@ function saveData() {
 }
 
 
-function userData() {
+function userData() { // Funcion que muestra los datos del usuario en los campos correspondientes obteniendo la info desde local storage
 
     let nombres = document.getElementById("first-name");
     let apellidos = document.getElementById("last-name");
@@ -91,9 +68,9 @@ function userData() {
 
     let userDataObj = localStorage.getItem("userDataObj");
 
-    if (userDataObj != null) {
+    if (userDataObj != null) { // Se verifica que previamente existan datos guardados en local storage
 
-        let dataUser = JSON.parse(userDataObj);
+        let dataUser = JSON.parse(userDataObj); // Se convierte el string a objeto nuevamente
 
         nombres.value = dataUser.nombres;
         apellidos.value = dataUser.apellidos;
@@ -103,10 +80,10 @@ function userData() {
     }
 }
 
-function setProfileImage() {
+function setProfileImage() { // Funcion que obtiene desde local storage la imagen almacenada en formato string
     const profileImageDataUrl = localStorage.getItem("profileImage");
 
-    if (profileImageDataUrl) {
+    if (profileImageDataUrl) { // Se verifica que existan datos de imagen guardados
         document.getElementById("userImageProfile").setAttribute("src", profileImageDataUrl)
     }
 }
@@ -115,17 +92,17 @@ function setProfileImage() {
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e) {
-    userData();
+    userData(); // Se ejecuta la funcion para que cuando el usuario vuelva a my-profile.html sin cerrar sesion se muestren sus datos en pantalla
     document.getElementById("image-profile").addEventListener("change", () => {
-        //console.log(this.activeElement.files);
-        const reader = new FileReader();
+
+        const reader = new FileReader(); // FileReader es utilizado para leer los datos de la imagen 
+
+        reader.readAsDataURL(this.activeElement.files[0]); // Obtiene los datos de la imagen y los almacena en reader.result
 
         reader.addEventListener("load", () => {
-            //console.log(reader.result);
-            localStorage.setItem("profileImage", reader.result)
+            localStorage.setItem("profileImage", reader.result) // Se guardan los datos de la imagen en localstorage
         })
 
-        reader.readAsDataURL(this.activeElement.files[0]);
     });
-    setProfileImage()
+    setProfileImage() //Se ejecuta la funcion al cargar el DOM para que el usuario visualice la imagen almacenada previamente
 });
