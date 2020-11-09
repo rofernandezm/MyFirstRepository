@@ -1,23 +1,18 @@
 function saveData() { // Funcion que obtiene los datos ingresados en el modal y los almacena en local storage
 
-    let nombres = document.getElementById("input-first-name");
-    let apellidos = document.getElementById("input-last-name");
-    let edad = document.getElementById("input-age");
-    let telefono = document.getElementById("input-telefono");
-    let email = document.getElementById("input-email");
     let alerta; // Variable auxiliar para generar alerta de boostrap dinamicamente
     let contAlerta = document.getElementById("alerta");
 
-    let inputValue = Array.from(document.getElementsByClassName("profile")); // Se genera un array por todos los elementos con clase Profile
+    let inputValue = Array.from(document.getElementsByClassName("profile")); // Se genera un array por todos los input con clase Profile
     const value = inputValue.map((i) => { return i.value }) //Se genera un nuevo array solo con los valores de los elementos en inputValue
 
     let obj = new Object(); // Se declara el objeto donde se agregaran los datos del usuario
 
-    obj.nombres = nombres.value;
-    obj.apellidos = apellidos.value;
-    obj.edad = edad.value;
-    obj.telefono = telefono.value;
-    obj.email = email.value;
+    obj.nombres = value[0];
+    obj.apellidos = value[1];
+    obj.edad = value[2];
+    obj.telefono = value[3];
+    obj.email = value[4];
 
     let objStr = JSON.stringify(obj); // Se convierte el objeto a string
 
@@ -60,11 +55,7 @@ function saveData() { // Funcion que obtiene los datos ingresados en el modal y 
 
 function userData() { // Funcion que muestra los datos del usuario en los campos correspondientes obteniendo la info desde local storage
 
-    let nombres = document.getElementById("first-name");
-    let apellidos = document.getElementById("last-name");
-    let edad = document.getElementById("age");
-    let telefono = document.getElementById("telefono");
-    let email = document.getElementById("email");
+    let userData = Array.from(document.getElementsByClassName("userData")); // Se genera un array por todos los input con clase userData
 
     let userDataObj = localStorage.getItem("userDataObj");
 
@@ -72,11 +63,11 @@ function userData() { // Funcion que muestra los datos del usuario en los campos
 
         let dataUser = JSON.parse(userDataObj); // Se convierte el string a objeto nuevamente
 
-        nombres.value = dataUser.nombres;
-        apellidos.value = dataUser.apellidos;
-        edad.value = dataUser.edad;
-        telefono.value = dataUser.telefono;
-        email.value = dataUser.email;
+        userData[0].value = dataUser.nombres;
+        userData[1].value = dataUser.apellidos;
+        userData[2].value = dataUser.edad;
+        userData[3].value = dataUser.telefono;
+        userData[4].value = dataUser.email;
     }
 }
 
